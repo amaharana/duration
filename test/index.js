@@ -6,7 +6,7 @@ module.exports = function (t) {
 	var d1 = new Date(Date.UTC(2001, 1, 2, 1, 1, 1, 1)), d, d2;
 
 	return {
-		"Second date is optional": function (a) {
+		/* "Second date is optional": function (a) {
 			var d3, m;
 			d2 = new Date();
 			d = t(d1);
@@ -659,6 +659,41 @@ module.exports = function (t) {
 			var dateTo = new Date(1577750400000);
 			d = t(dateFrom, dateTo);
 			a(d.day, 30);
+		}, */
+		"Leap year": function (t, a) {
+			const set1FromDate = new Date("07/06/2020");
+			const set1ToDate = new Date("08/06/2023");
+			const set1Duration = t(set1FromDate, set1ToDate);
+			set1Duration.between(set1FromDate, set1ToDate);
+
+			const set2FromDate = new Date("09/06/2020");
+			const set2ToDate = new Date("08/06/2023");
+			const set2Duration = t(set2FromDate, set2ToDate);
+			set2Duration.between(set2FromDate, set2ToDate);
+
+			const set3FromDate = new Date("08/06/2020");
+			const set3ToDate = new Date("08/06/2023");
+			const set3Duration = t(set3FromDate, set3ToDate);
+			set3Duration.between(set3FromDate, set3ToDate);
+
+			const set4FromDate = new Date("02/28/2019");
+			const set4ToDate = new Date("02/28/2020");
+			const set4Duration = t(set4FromDate, set4ToDate);
+			set4Duration.between(set4FromDate, set4ToDate);
+
+			const set5FromDate = new Date("03/01/2019");
+			const set5ToDate = new Date("02/29/2020");
+			const set5Duration = t(set5FromDate, set5ToDate);
+			set5Duration.between(set5FromDate, set5ToDate);
+
+			/*
+			Expected output:
+				3 / 1 / 0
+				2 / 11 / 0
+				3 / 0 / 0
+				1 / 0 / 0
+				0 / 11 / 28
+			*/
 		}
 	};
 };
