@@ -12,7 +12,7 @@ var d           = require("d")
   , toPosInt    = require("es5-ext/number/to-pos-integer")
   , isValue     = require("es5-ext/object/is-value");
 
-var abs = Math.abs, format, toPrimitive, getYear, Duration, getCalcData;
+var abs = Math.abs, format, toPrimitive, getYear, Duration, getCalcData, getProlepticMonth;
 
 format = require("es5-ext/string/format-method")({
 	y: function () { return String(abs(this.year)); },
@@ -39,6 +39,10 @@ getCalcData = function (duration) {
 		: { to: duration.to, from: duration.from, sign: 1 };
 };
 
+getProlepticMonth = function(dateObject) {
+	return (dateObject.getFullYear() * 12 + dateObject.getMonth() - 1);
+};
+
 Duration = module.exports = function (from, to) {
 	// Make it both constructor and factory
 	if (!(this instanceof Duration)) return new Duration(from, to);
@@ -49,12 +53,9 @@ Duration = module.exports = function (from, to) {
 
 Duration.prototype = Object.create(Object.prototype, {
 	
-	getProlepticMonth: d(function(date) {
-		return (date.getFullYear() * 12 + date.getMonth() - 1);
-	}),
-
 	between: d(function(from, to) {
-        let totalMonths = this.getProlepticMonth(to) - this.getProlepticMonth(from);  // safe
+        let totalMonths = getProlepticMonth(to) - getProlepticMonth(from);  // safe
+
         let tempDays = to.getDate() - from.getDate();
         if (totalMonths > 0 && tempDays < 0) {
             totalMonths--;
@@ -67,7 +68,7 @@ Duration.prototype = Object.create(Object.prototype, {
         }
         let tempYears = Math.floor(totalMonths / 12);  // safe
         let tempMonths = (totalMonths % 12);  // safe
-		console.log(tempYears + " / " + tempMonths + " / " + tempDays);
+		console.log(tempYears + "y " + tempMonths + "m " + tempDays + "d");
 	}),
 	valueOf: d((toPrimitive = function () { return this.to - this.from; })),
 	millisecond: d.gs(function () { return this.milliseconds % 1000; }),

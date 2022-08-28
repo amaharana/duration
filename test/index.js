@@ -664,27 +664,39 @@ module.exports = function (t) {
 			const set1FromDate = new Date("07/06/2020");
 			const set1ToDate = new Date("08/06/2023");
 			const set1Duration = t(set1FromDate, set1ToDate);
-			set1Duration.between(set1FromDate, set1ToDate);
-
+			
 			const set2FromDate = new Date("09/06/2020");
 			const set2ToDate = new Date("08/06/2023");
 			const set2Duration = t(set2FromDate, set2ToDate);
-			set2Duration.between(set2FromDate, set2ToDate);
 
 			const set3FromDate = new Date("08/06/2020");
 			const set3ToDate = new Date("08/06/2023");
 			const set3Duration = t(set3FromDate, set3ToDate);
-			set3Duration.between(set3FromDate, set3ToDate);
 
 			const set4FromDate = new Date("02/28/2019");
 			const set4ToDate = new Date("02/28/2020");
 			const set4Duration = t(set4FromDate, set4ToDate);
-			set4Duration.between(set4FromDate, set4ToDate);
 
 			const set5FromDate = new Date("03/01/2019");
 			const set5ToDate = new Date("02/29/2020");
 			const set5Duration = t(set5FromDate, set5ToDate);
+
+			console.log("== Original Start ==")
+			console.log(set1Duration.toString(1, 4));
+			console.log(set2Duration.toString(1, 4));
+			console.log(set3Duration.toString(1, 4));
+			console.log(set4Duration.toString(1, 4));
+			console.log(set5Duration.toString(1, 4));
+			console.log("== Original End ==\n")
+
+			console.log("== New Start ==")
+			set1Duration.between(set1FromDate, set1ToDate);
+			set2Duration.between(set2FromDate, set2ToDate);
+			set3Duration.between(set3FromDate, set3ToDate);
+			set4Duration.between(set4FromDate, set4ToDate);
 			set5Duration.between(set5FromDate, set5ToDate);
+			console.log("== New End ==")
+
 
 			/*
 			Expected output:
